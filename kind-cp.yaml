@@ -1,0 +1,23 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+  extraMounts:
+  - hostPath: /Users/emre.savci/Desktop/kube-authz
+    containerPath: /files
+  kubeadmConfigPatches:
+  - |
+    kind: ClusterConfiguration
+    apiServer:
+        extraArgs:
+          enable-admission-plugins: NodeRestriction,MutatingAdmissionWebhook,ValidatingAdmissionWebhook
+          authorization-mode: Webhook, RBAC
+          authorization-webhook-version: v1
+          authorization-webhook-config-file: /files/authz-webhook.yaml
+          authorization-webhook-cache-authorized-ttl: 120s
+          authorization-webhook-cache-unauthorized-ttl: 30s
+        extraVolumes:
+        - name: api-server-basic-auth-files
+          hostPath: "/files"
+          mountPath: "/files"
+          readOnly: true
