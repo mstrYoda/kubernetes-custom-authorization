@@ -1,0 +1,15 @@
+clusters:
+- name: devx-webhooks
+  cluster:
+    certificate-authority: /files/localhost.crt
+    server: https://devx-webhooks/authorize
+users:
+- name: api-server
+  user:
+    token: test-token
+current-context: devx-webhooks
+contexts:
+- context:
+    cluster: devx-webhooks
+    user: api-server
+  name: devx-webhooks
