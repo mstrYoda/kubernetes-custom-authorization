@@ -1,7 +1,7 @@
 clusters:
 - name: devx-webhooks
   cluster:
-    certificate-authority: /files/localhost.crt
+    certificate-authority: /files/webhook.crt
     server: https://devx-webhooks/authorize
 users:
 - name: api-server
